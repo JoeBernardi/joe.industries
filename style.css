@@ -1,0 +1,121 @@
+body {
+	font-family: 'Merriweather', serif;
+	background: #fafafa;
+}
+
+em {
+	font-style: italic;
+}
+
+#header {
+	width: 100%;
+	background: #454545;
+	height: 15px;
+	border-bottom: 2px solid #cd6d6d;
+}
+
+a#home {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	font-weight: 900;
+	text-transform: uppercase;
+	font-size: 38px;
+	text-align: left;
+	letter-spacing: 1px;
+	width: 800px;
+	margin: 35px auto 27px;
+}
+
+a#home span {
+	font-size: 64px;
+}
+
+ul#nav {
+	width: 800px;
+	margin: 0 auto;
+	border-bottom: 1px solid #cd6d6d;
+	text-align: left;
+}
+
+ul#nav li {
+	display: inline-block;
+	position: relative;
+	top: 8px;
+	background: #fafafa;
+	padding: 0 10px;
+}
+
+ul#nav li:first-of-type {
+	padding-left: 0;
+}
+
+ul#nav li a {
+	color: #454545;
+	text-decoration: none
+}
+
+ul#nav li a:hover {
+	color: #cd6d6d;
+}
+
+#content {
+	width: 800px;
+	margin: 45px auto;
+}
+
+#content h2 {
+	font-weight: 900;
+	margin-bottom: 25px;
+}
+
+a.content-item {
+	text-decoration: none;
+	display: block;
+	padding-left: 25px;
+	margin-bottom: 30px;
+}
+
+a.content-item img {
+	width: 750px;
+	margin: 0 auto 15px;
+	padding: 2px;
+	border: 1px solid #000;
+}
+
+a.content-item h3 {
+	font-weight: 900;
+	color: #428ea7;
+}
+
+a.content-item p, #content.about p {
+	color: #000;
+	font-weight: 300;
+	margin: 10px 0;
+	line-height: 23px
+}
+
+a.content-item p {
+	margin: 5px 0;
+}
+
+a.content-item:hover img {
+	border: 1px solid #cd6d6d;
+}
+
+a.content-item:hover h3, a.content-item:hover p {
+	color: #cd6d6d;
+}
+
+#content.about img {
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 5px;
+}
+
+#content.about .img-caption {
+    width: 419px;
+    margin: 0 auto;
+    font-size: 12px;
+		line-height: 16px;
+}
