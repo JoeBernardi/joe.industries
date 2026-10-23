@@ -56,7 +56,7 @@ ul#nav li a {
 }
 
 ul#nav li a:hover {
-	color: #cd6d6d;
+	color: #b04a4a;
 }
 
 #content {
@@ -78,6 +78,8 @@ a.content-item {
 
 a.content-item img {
 	width: 750px;
+	max-width: calc(100% - 6px);
+	height: auto;
 	margin: 0 auto 15px;
 	padding: 2px;
 	border: 1px solid #000;
@@ -85,7 +87,7 @@ a.content-item img {
 
 a.content-item h3 {
 	font-weight: 900;
-	color: #428ea7;
+	color: #2f6f86;
 }
 
 a.content-item p, #content.about p {
@@ -104,18 +106,47 @@ a.content-item:hover img {
 }
 
 a.content-item:hover h3, a.content-item:hover p {
-	color: #cd6d6d;
+	color: #b04a4a;
 }
 
 #content.about img {
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
   display: block;
   margin-bottom: 5px;
 }
 
 #content.about .img-caption {
-    width: 419px;
+    max-width: 419px;
     margin: 0 auto;
     font-size: 12px;
 		line-height: 16px;
+}
+
+/* Phones: drop the fixed 800px column so text is readable without zooming. */
+@media (max-width: 840px) {
+	a#home, ul#nav, #content {
+		width: auto;
+		max-width: 800px;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	a#home {
+		font-size: 26px;
+		margin: 25px auto 20px;
+	}
+
+	a#home span {
+		font-size: 44px;
+	}
+
+	#content {
+		margin: 35px auto;
+	}
+
+	a.content-item {
+		padding-left: 0;
+	}
 }

@@ -1,18 +1,24 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="">
+        <meta name="description" content="Creates haiku from the lyrics of the first three Ramones LPs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Ramones Haiku Generator</title>
-		<link href='https://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+        <link rel="canonical" href="https://joe.industries/ramones/">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="/favicon.ico" sizes="32x32">
+		<link href='https://fonts.googleapis.com/css?family=Arvo:400,700&display=swap' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="reset.css">
         <link rel="stylesheet" href="style.css">
 		<meta property="og:title" content="Ramones Haiku Generator"/>
-		<meta property="og:url" content="http://ihatetourists.com/ramones"/>
-		<meta property="og:description" content="Creates haiku from the lyrics of the first three Ramones LPs." /> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script src="script.js"></script>
+		<meta property="og:url" content="https://joe.industries/ramones/"/>
+		<meta property="og:description" content="Creates haiku from the lyrics of the first three Ramones LPs." />
+		<meta property="og:type" content="website"/>
+		<meta property="og:image" content="https://joe.industries/images/ramones.jpg"/>
+		<meta name="twitter:card" content="summary_large_image"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" defer></script>
+        <script src="script.js" defer></script>
     </head>
     <body>
 
@@ -32,7 +38,7 @@
 
 	    </div>
 
-        <a id="more">Do it one more time for me.</a>
+        <a id="more" href="#">Do it one more time for me.</a>
 
         <div id="syllables-checkbox">
         	<label for="syllables"><input type="checkbox" id="syllables"/>Count syllables?</label>
@@ -41,10 +47,10 @@
         <div id="share">
             <a href="#" target="_blank" id="tweet">Tweet current haiku</a><br/>
             <a href="#" target="_blank" id="facebook">Share current haiku on Facebook</a>
-        <div>
+        </div>
 
         <div id="what">
-        	<a>What's all this?</a>
+        	<a href="#">What's all this?</a>
         </div>
 
         <div id="who">

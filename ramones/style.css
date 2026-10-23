@@ -115,3 +115,53 @@ a#more:hover, #what a:hover, #who a:hover, #share a:hover{
 	font-size: 42px;
 	margin-top: 10px;
 }
+
+/* Phones: let the haiku box grow to fit wrapped lines instead of clipping them. */
+@media (max-width: 600px) {
+	#header {
+		font-size: 26px;
+		padding: 25px 10px;
+	}
+
+	#haiku-container {
+		display: grid;
+		height: auto;
+		min-height: 160px;
+		padding: 32px 0;
+		font-size: 26px;
+		line-height: 36px;
+	}
+
+	/* Both boxes share one grid cell, so the container is as tall as whichever is showing. */
+	.haiku, #explanation {
+		position: relative;
+		grid-area: 1 / 1;
+		width: 90%;
+		margin-left: -45%;
+	}
+
+	#explanation {
+		font-size: 17px;
+		line-height: 26px;
+		margin-top: 0;
+	}
+
+	#explanation .arrow {
+		font-size: 30px;
+	}
+
+	a#more {
+		font-size: 22px;
+		margin: 25px 16px;
+	}
+
+	#what, #who {
+		position: static;
+		text-align: center;
+		margin: 12px 0;
+	}
+
+	#who {
+		padding-bottom: 20px;
+	}
+}

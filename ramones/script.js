@@ -1,35 +1,21 @@
 function new_count(word) {
-	word = word.toLowerCase();                                    
+	word = word.toLowerCase();
+	// Strip punctuation from the ends ("Ph.D." -> "ph.d", "DDT," -> "ddt", "moonlight?" -> "moonlight")
+	// so the special cases match and the silent-e rule below sees the real end of the word.
+	word = word.replace(/^[^a-z0-9']+|[^a-z0-9']+$/g, '');
 
   	//case-specific syllable corrections
   	if(word === "d.u.m.b" || word === "1-2-3-4" || word === "4-5-6-7") { return 4; }
-  	else if (word === "ph.d" || word === "SLA" || word === "pt-boat" || word === "somebody" || word === "lsd" || word === "lsd," || word === "ddt" || word === "cia" || word === "ooo-ooo-whee!" || word === "53rd" || word === "everything's") { return 3; }
-  	else if(word === "tryin'" || word === "moonlight?" || word === "lovely" || word === "wanted" || word === "couldn't" || word === "basement" || word ==="real" || word === "somethin'" || word === "daughter?" || word === "going" || word === "viet" || word === "lying" || word === "tv's" || word === "doing" || word === "gimme" || word === "tired" || word ==="cryin'" || word === "schatze") { return 2; }
-  	else if(word.length <= 3 || word === "hand?" || word === "there's" || word === "where's" || word === "future's" || word === "rule") { return 1; }                           
-  	else if (word.match(/[aeiouy]{1,2}/g) === null) {console.log(word)}
+  	else if (word === "ph.d" || word === "sla" || word === "pt-boat" || word === "somebody" || word === "lsd" || word === "ddt" || word === "cia" || word === "ooo-ooo-whee" || word === "53rd" || word === "everything's") { return 3; }
+  	else if(word === "tryin'" || word === "moonlight" || word === "lovely" || word === "wanted" || word === "couldn't" || word === "basement" || word ==="real" || word === "somethin'" || word === "daughter" || word === "going" || word === "viet" || word === "lying" || word === "tv's" || word === "doing" || word === "gimme" || word === "tired" || word ==="cryin'" || word === "schatze" || word === "baseball") { return 2; }
+  	else if(word.length <= 3 || word === "hand" || word === "there's" || word === "where's" || word === "future's" || word === "rule") { return 1; }
 
-  		else {
-  			word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');  
-  			word = word.replace(/^y/, '');                                 
+  	word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+  	word = word.replace(/^y/, '');
 
-  		//if there's not a question mark in it we're good, otherwise it generally guesses one syllable too low. don't go below zero, though.
-  		if(word.indexOf('?') === -1)
-  		{
-  			return word.match(/[aeiouy]{1,2}/g).length;                    
-  		}
-
-  		else 
-  		{
-  			if (word.match(/[aeiouy]{1,2}/g).length-1 === 0) 
-  			{
-  				return 1
-  			}
-
-  			else {
-  				return word.match(/[aeiouy]{1,2}/g).length-1;
-  			}
-  		}
-  	}
+  	// No vowels left: count it as one syllable rather than returning nothing.
+  	var vowelGroups = word.match(/[aeiouy]{1,2}/g);
+  	return vowelGroups === null ? 1 : vowelGroups.length;
   }
 
 
@@ -42,9 +28,10 @@ function new_count(word) {
   	var hitTwelve = false;
   	while (syllableCount < 17)
   	{
-  		words.push(data[randomIndex]);
-  		var syllables = new_count(data[randomIndex])
-  		console.log(data[randomIndex] + " : " + syllables)
+  		// Wrap around to the start so a start near the end of the list can't run off it.
+  		var word = data[randomIndex % data.length];
+  		words.push(word);
+  		var syllables = new_count(word)
   		syllableCount += syllables
   		if(syllableCount === 5) {
   			hitFive = true;
@@ -130,11 +117,13 @@ String.prototype.toTitleCase = function () {
 
   $(document).ready(function() {
   	getRegularLines();
-  	$("#more").click(function() {
+  	$("#more").click(function(e) {
+  		e.preventDefault();
 
+  		// .promise().done runs once after both elements finish, instead of once per element.
   		$(".haiku, #explanation").animate({
   			left: '-150%'
-  		}, 'fast', function() {
+  		}, 'fast').promise().done(function() {
   			$("#explanation").hide();
   			$('body').removeClass('what')
   			$('.haiku').css("left","150%");
@@ -153,7 +142,8 @@ String.prototype.toTitleCase = function () {
 
   	})
 
-  	$("#what a").click(function() {
+  	$("#what a").click(function(e) {
+  		e.preventDefault();
   		if(!$('body').hasClass('what')) {
   			$(".haiku").animate({
   				left: '-150%'
