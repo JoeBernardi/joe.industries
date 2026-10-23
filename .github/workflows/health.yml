@@ -1,0 +1,90 @@
+name: Health check
+
+on:
+  schedule:
+    - cron: "0 14 1 * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check sites, apps and certificates
+        run: |
+          set +e
+          ua='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+          rows=()
+          failures=()
+          record() { # check, ok|fail, detail
+            if [ "$2" = ok ]; then rows+=("| $1 | pass | $3 |")
+            else rows+=("| $1 | **FAIL** | $3 |"); failures+=("- $1: $3"); fi
+          }
+
+          check_url() { # url, [text the body must contain]
+            local body code
+            body=$(mktemp)
+            code=$(curl -sL -m 20 -A "$ua" -o "$body" -w '%{http_code}' "$1")
+            code=${code:-000}
+            if [ "$code" != 200 ]; then record "$1" fail "HTTP $code"
+            elif [ -n "${2:-}" ] && [ "$(grep -c "$2" "$body")" -eq 0 ]; then
+              record "$1" fail "HTTP 200 but body has no \`$2\`"
+            else record "$1" ok "HTTP $code"; fi
+            rm -f "$body"
+          }
+
+          check_cert() { # host
+            local end days
+            end=$(openssl s_client -servername "$1" -connect "$1:443" </dev/null 2>/dev/null \
+              | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+            if [ -z "$end" ]; then record "TLS $1" fail "could not read certificate"; return; fi
+            days=$(( ($(date -d "$end" +%s) - $(date +%s)) / 86400 ))
+            if [ "$days" -lt 14 ]; then record "TLS $1" fail "expires in $days days ($end)"
+            else record "TLS $1" ok "$days days left"; fi
+          }
+
+          check_url https://joe.industries/
+          check_url https://nytletter.com/
+          check_url https://websafe2k16.com/
+          check_url https://youtubecover.band/
+          check_url "https://youtubecover.band/api/covers?q=iris" videoId
+          check_url https://likes-song.org/health/ready
+          check_url https://likes-song.org/
+          for h in joe.industries nytletter.com websafe2k16.com youtubecover.band likes-song.org; do
+            check_cert "$h"
+          done
+
+          {
+            echo "## Health check $(date -u +%F)"
+            echo
+            echo "| Check | Result | Detail |"
+            echo "| --- | --- | --- |"
+            printf '%s\n' "${rows[@]}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${#failures[@]}" -gt 0 ]; then
+            printf '%s\n' "${failures[@]}" > "$RUNNER_TEMP/failures.md"
+            printf '%s\n' "${failures[@]}"
+            exit 1
+          fi
+          echo "All ${#rows[@]} checks passed."
+
+      - name: Open or update the health issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          body="$(cat "$RUNNER_TEMP/failures.md" 2>/dev/null || echo 'The check step failed before listing failures.')"
+          body+=$'\n\n'"Run: $RUN_URL"
+          gh label create health --force --color B60205 --description "Monthly health check"
+          open=$(gh issue list --label health --state open --limit 1 --json number --jq '.[0].number // empty')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "$body"
+          else
+            gh issue create --title "Health check failed $(date -u +%F)" --label health --body "$body"
+          fi
