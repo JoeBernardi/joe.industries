@@ -42,17 +42,7 @@ a#more {
 	cursor: pointer;
 }
 
-#share {
-	text-align: center;
-	margin: 35px 0;
-	line-height: 22px;
-}
-
-#share a {
-	color: #fff;
-}
-
-a#more:hover, #what a:hover, #who a:hover, #share a:hover{
+a#more:hover, #what a:hover {
 	color: #ccc;
 }
 
@@ -80,13 +70,7 @@ a#more:hover, #what a:hover, #who a:hover, #share a:hover{
 	left: 20px;
 }
 
-#who {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
-}
-
-#what a, #who a {
+#what a {
 	font-size: 14px;
 	color: #fff;
 	text-decoration: underline;
@@ -155,13 +139,10 @@ a#more:hover, #what a:hover, #who a:hover, #share a:hover{
 		margin: 25px 16px;
 	}
 
-	#what, #who {
+	#what {
 		position: static;
 		text-align: center;
-		margin: 12px 0;
-	}
-
-	#who {
+		margin: 30px 0 0;
 		padding-bottom: 20px;
 	}
 }

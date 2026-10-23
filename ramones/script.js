@@ -88,8 +88,6 @@ String.prototype.toTitleCase = function () {
   		$(".first-line").text(firstLine.toTitleCase())
   		$(".second-line").text(secondLine.toTitleCase())
   		$(".third-line").text(thirdLine.toTitleCase())
-  		$("a#tweet").attr("href", "http://twitter.com/share?url=&text=" + firstLine.toTitleCase() + " / " + secondLine.toTitleCase() + " / " + thirdLine.toTitleCase() + " // http://bit.ly/HJ5fsN");
-  	  	$("a#facebook").attr("href", "https://www.facebook.com/dialog/feed?app_id=458210984255191&link=http://ihatetourists.com/ramones&picture=http://ihatetourists.com/ramones/logo.png&caption=Haiku%20from%20the%20lyrics%20of%20the%20first%20three%20Ramones%20LPs.&name=Ramones%20Haiku%20Generator&description=" + encodeURIComponent(firstLine.toTitleCase()) + "%20%2F%20" + encodeURIComponent(secondLine.toTitleCase()) + "%20%2F%20" + encodeURIComponent(thirdLine.toTitleCase()) + "&redirect_uri=http://ihatetourists.com/ramones");
 
   	});
   }
@@ -110,8 +108,6 @@ String.prototype.toTitleCase = function () {
   		$(".first-line").text(lines[0].toTitleCase())
   		$(".second-line").text(lines[1].toTitleCase())
   		$(".third-line").text(lines[2].toTitleCase())	
-  		$("a#tweet").attr("href", "http://twitter.com/share?url=&text=" + lines[0].toTitleCase() + " / " + lines[1].toTitleCase() + " / " + lines[2].toTitleCase() + " http://bit.ly/HJ5fsN");
-  		$("a#facebook").attr("href", "https://www.facebook.com/dialog/feed?app_id=458210984255191&link=http://ihatetourists.com/ramones&picture=http://ihatetourists.com/ramones/logo.png&caption=Haiku%20from%20the%20lyrics%20of%20the%20first%20three%20Ramones%20LPs.&name=Ramones%20Haiku%20Generator&description=" + encodeURIComponent(lines[0].toTitleCase()) + "%20%2F%20" + encodeURIComponent(lines[1].toTitleCase()) + "%20%2F%20" + encodeURIComponent(lines[2].toTitleCase()) + "&redirect_uri=http://ihatetourists.com/ramones");
   	})
   }
 
